@@ -48,7 +48,7 @@ To recreate this project, you'll need the following hardware components:
 Arduino IDE: Download and install the Arduino IDE from [Arduino's official website](https://www.arduino.cc/).
 Speden Sepelit Code: Clone or download the project from this repository.
 
-##Circuit Diagram
+## Circuit Diagram
 
 Here’s how to wire your components:
 
