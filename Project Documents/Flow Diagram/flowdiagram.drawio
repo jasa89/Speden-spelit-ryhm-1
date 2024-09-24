@@ -1,0 +1,85 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0" version="24.7.16">
+  <diagram name="Page-1" id="LNkP2DhkYTBUMdGbB9Hj">
+    <mxGraphModel dx="1203" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-2" target="wXUs5NrSjvULmvZoKJhY-5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-2" value="Aloitus" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="300" y="30" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-5" target="wXUs5NrSjvULmvZoKJhY-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="wXUs5NrSjvULmvZoKJhY-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-5" value="Kohde-LEDin&lt;br&gt;sytytys" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="300" y="140" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-7" target="wXUs5NrSjvULmvZoKJhY-19" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-7" value="LED Päälle" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="500" y="70" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-9" target="wXUs5NrSjvULmvZoKJhY-13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-9" value="Yhtä Vastauspainiketta&lt;br&gt;painettu" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="110" y="300" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-10" value="Väärin (?)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-13" target="wXUs5NrSjvULmvZoKJhY-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-13" target="wXUs5NrSjvULmvZoKJhY-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-12" value="Oikein (?)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="wXUs5NrSjvULmvZoKJhY-11" vertex="1" connectable="0">
+          <mxGeometry y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-13" value="Vertaa" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="300" y="300" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-14" value="Laske ja esitä nykyinen pistemäärä" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="300" y="450" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.577;entryY=1.04;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="709.7" y="110" as="targetPoint" />
+            <mxPoint x="602" y="346" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-16" value="Lopetus" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="510" y="320" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="wXUs5NrSjvULmvZoKJhY-18" target="wXUs5NrSjvULmvZoKJhY-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-18" value="&lt;div&gt;Reset&lt;/div&gt;&lt;div&gt;Logiikka(?)&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="660" y="10" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-19" value="Odota&lt;br&gt;ja vähennä odotusaikaa" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="500" y="210" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-20" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Speden Spelit&lt;/h1&gt;&lt;div&gt;Ryhmä 1&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="20" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="wXUs5NrSjvULmvZoKJhY-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.017;exitY=0.64;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="501.70000000000005" y="274" as="sourcePoint" />
+            <mxPoint x="390" y="238" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
