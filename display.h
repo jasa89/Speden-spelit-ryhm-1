@@ -2,7 +2,15 @@
 #define DISPLAY_H
 #include <arduino.h>
 
+int reset = 12;
+int shiftClock = 11;
+int latchClock = 10;
+int outEnable = 9;
+int serialInput = 8;
 
+pinMode(shiftClock,OUTPUT);
+pinMode(latchClock,OUTPUT);
+pinMode(serialInput,OUTPUT);
 /*
   initializeDisplay subroutine initializes 5 pins needed for controlling 7-segment
   displays in a cascade as follows:
