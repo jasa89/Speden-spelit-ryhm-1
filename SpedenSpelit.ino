@@ -29,11 +29,11 @@ void setup()
 
 void loop()
 {
-  byte luettu = digitalRead(12); //TEST
-  if (luettu ==LOW) {           //TEST
-    buttonNumber++;
-    Serial.print("ButtonNumber: ");
-    Serial.println(buttonNumber);
+  byte luettu = digitalRead(12);    //TEST
+  if (luettu ==LOW) {               //TEST
+    buttonNumber++;                 //TEST
+    Serial.print("ButtonNumber: "); //TEST
+    Serial.println(buttonNumber);   //TEST
   }
   if(buttonNumber>=0)
   {
@@ -51,7 +51,8 @@ void loop()
     newTimerInterrupt = false;
      // new random number must be generated and corresponding led must be activated
 
-    int ledNumber = random(0,4);
+    //Generate random number for ledNumber
+    int ledNumber = random(0,4); 
     int led = ledNumber;
     Serial.print("LED: ");
     Serial.println(led);
@@ -77,15 +78,18 @@ ISR(TIMER1_COMPA_vect)
   //  Communicate to loop() that it's time to make new random number. Increase timer interrupt rate after 10 interrupts.
   Serial.println("interrupt happened");   //TEST
 
+  //Increase interruptCounter by 1
   interruptCounter++;
 
+  //after 10 interrupts, increase interrupt rate:
   if (interruptCounter >= 10) {
-    OCR1A = OCR1A / 2;
-    interruptCounter = 0;
+    OCR1A = OCR1A / 2;    //Halve the compare value to double the interrupt frequency
+    interruptCounter = 0; //Reset counter
   }
 
+  //set newTimerInterrupt to true to generate a new number in loop()
   newTimerInterrupt = true;
-  Serial.println(interruptCounter);
+  Serial.println(interruptCounter); //TEST
 }
 
 
@@ -103,10 +107,11 @@ void initializeGame()
 void startTheGame()
 {
    // see requirements for the function from SpedenSpelit.h
-  initializeTimer();
+
+  initializeTimer(); //Activate timer
   InitializeGame();
 
 
-  interrupts();
+  interrupts(); //Activate interrupts
 }
 
