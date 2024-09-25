@@ -73,7 +73,7 @@ void initializeTimer(void)
 }
 
 
-ISR(TIMER1_COMPA_vect)
+ISR(TIMER1_COMPA_vect) //GPT
 {
   //  Communicate to loop() that it's time to make new random number. Increase timer interrupt rate after 10 interrupts.
   Serial.println("interrupt happened");   //TEST
