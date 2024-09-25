@@ -51,7 +51,7 @@ void loop()
     newTimerInterrupt = false;
      // new random number must be generated and corresponding led must be activated
 
-    //Generate random number for ledNumber
+    //Generate random number to int variable
     int ledNumber = random(0,4); 
     int led = ledNumber;
     Serial.print("LED: ");
