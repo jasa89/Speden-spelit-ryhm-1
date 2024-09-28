@@ -38,18 +38,27 @@ void initializeDisplay(void)
 
 void writeByte(uint8_t bits,bool last)
 {
-  
+  digitalWrite(latchClock, LOW);
+  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegment[number]);
+    if(last) {
+      digitalWrite(latchClock,HIGH);
+    }
 // See requirements for this function from display.h
 }
 
 
 void writeHighAndLowNumber(uint8_t tens,uint8_t ones)
 {
+  writeByte(tens, false);
+  writeByte(ones, true);
 // See requirements for this function from display.h
 }
 
 void showResult(byte number)
 {
+  uint8_t tens = number / 10;
+  uint8_t ones = number % 10;
+  writeHighAndLowNumber(tens, ones);
 // See requirements for this function from display.h
 }
 
