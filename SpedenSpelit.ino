@@ -37,22 +37,25 @@ void setup()
 //          Main loop
 //**********************************
 void loop() {
-
-  byte luettu = digitalRead(12);    //TEST
-  if (luettu ==LOW) {               //TEST
-    buttonNumber++;                 //TEST
-  //  Serial.print("ButtonNumber: "); //TEST
-    //Serial.println(buttonNumber);   //TEST
-    startTheGame();
+//--------TEST CODE---------------
+  byte luettu = digitalRead(12);    
+  if (luettu ==LOW) {               
+    buttonNumber++;        
+  //Serial.print("ButtonNumber: "); 
+  //Serial.println(buttonNumber);   
   }
+//--------END OF TEST CODE---------
 
   if(buttonNumber>=0) {
      // start the game if buttonNumber == 4
       isRunning = true;
       
-      luettu = 0;             //TEST
+//--------TEST CODE----------------
+      luettu = 0;
       buttonNumber=-1;
-      
+//--------END OF TEST CODE---------
+
+      startTheGame();
      // check the game if 0<=buttonNumber<4
   }
 
@@ -64,16 +67,18 @@ void loop() {
     byte ledNumber = random(0,4);            //Generate number for ledNumber
     userNumbers[currentIndex] = ledNumber;  //Assign ledNumber to array
     currentIndex++;                         //Increment currentIndex to change array "save slot"
+
+//--------TEST CODE-------------
     //Serial.print("LED: ");                  //Print LED value
     //Serial.println(ledNumber);
-    
-    //A0 - A3
-      for (int i=0;i>=3;i++) {
-        if (i==ledNumber) {
-          setLed(i);
-          Serial.print(i);
-        }
-      }
+//--------END OF TEST CODE------
+
+    setLed(ledNumber);
+
+//--------TEST CODE-------------
+    Serial.print("LED: ");  
+    Serial.println(ledNumber);
+//--------END OF TEST CODE------
   }
 
 }
@@ -98,20 +103,25 @@ void initializeTimer(void)
 ISR(TIMER1_COMPA_vect)
 {
   //  Communicate to loop() that it's time to make new random number. Increase timer interrupt rate after 10 interrupts.
- // Serial.println("interrupt happened");   //TEST
+//--------TEST CODE-----------------------
+ // Serial.println("interrupt happened"); 
+//--------END OF TEST CODE---------------
 
   //Increase interruptCounter by 1
   interruptCounter++;
 
   //after 10 interrupts, increase interrupt rate:
   if (interruptCounter >= 10) {
-    OCR1A = OCR1A / 2;        //Halve the compare value to double the interrupt frequency
+    OCR1A = OCR1A / 1.1;        //Halve the compare value to double the interrupt frequency
     interruptCounter = 0;     //Reset counter
   }
 
   //set newTimerInterrupt to true to generate a new number in loop()
   newTimerInterrupt = true;
-  Serial.println(interruptCounter); //TEST
+
+//--------TEST CODE------------------------
+  //Serial.println(interruptCounter); 
+//--------END OF TEST CODE-------------
 }
 
 
@@ -152,6 +162,9 @@ void startTheGame()
   initializeGame();
 
   interrupts(); //Activate interrupts
+
+//--------TEST CODE--------------------------
   Serial.println("Interrupts enabled");
+//--------END OF TEST CODE---------------------
 }
 
