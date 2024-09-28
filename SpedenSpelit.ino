@@ -41,8 +41,8 @@ void loop() {
   byte luettu = digitalRead(12);    //TEST
   if (luettu ==LOW) {               //TEST
     buttonNumber++;                 //TEST
-    Serial.print("ButtonNumber: "); //TEST
-    Serial.println(buttonNumber);   //TEST
+  //  Serial.print("ButtonNumber: "); //TEST
+    //Serial.println(buttonNumber);   //TEST
     startTheGame();
   }
 
@@ -64,7 +64,7 @@ void loop() {
     byte ledNumber = random(0,4);            //Generate number for ledNumber
     userNumbers[currentIndex] = ledNumber;  //Assign ledNumber to array
     currentIndex++;                         //Increment currentIndex to change array "save slot"
-    Serial.print("LED: ");                  //Print LED value
+    //Serial.print("LED: ");                  //Print LED value
     //Serial.println(ledNumber);
     
     //A0 - A3
