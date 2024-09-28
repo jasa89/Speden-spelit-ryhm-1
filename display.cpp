@@ -7,16 +7,16 @@ int outEnable = 9;
 int serialInput = 8;
 
 byte digitSegments[]= { //segment numbers
-  0x3f, //0
-  0x06, //1
-  0x5b, //2
-  0x4f, //3
-  0x66, //4
-  0x6d, //5
-  0x7d, //6
-  0x07, //7
-  0x7f, //8
-  0x6f  //9
+  0b00111111, // 0
+  0b00000110, // 1
+  0b01011011, // 2
+  0b01001111, // 3
+  0b01100110, // 4
+  0b01101101, // 5
+  0b01111101, // 6
+  0b00000111, // 7
+  0b01111111, // 8
+  0b01101111  // 9
 };
 
 void initializeDisplay(void)
