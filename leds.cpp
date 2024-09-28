@@ -10,7 +10,7 @@ void initializeLeds() {
 
 // Global variables for millis() timing
 unsigned long previousMillis = 0; // Store the last time an LED was updated
-unsigned long interval = 500;     // Initial interval (1000ms)
+unsigned long interval = 500;     // Initial interval (500ms)
 int currentLed = 0;               // Track the current LED
 int cycleCount = 0;               // Track number of cycles for speed increase
 bool initialLedsOn = true;        // Track whether all LEDs were turned on initially
