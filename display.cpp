@@ -39,7 +39,7 @@ void initializeDisplay(void)
 void writeByte(uint8_t bits,bool last)
 {
   digitalWrite(latchClock, LOW);
-  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegment[number]);
+  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegment[bits]);
     if(last) {
       digitalWrite(latchClock,HIGH);
     }
