@@ -2,11 +2,11 @@
 #define DISPLAY_H
 #include <arduino.h>
 
-int reset = 12;
-int shiftClock = 11;
-int latchClock = 10;
-int outEnable = 9;
-int serialInput = 8;
+extern int reset = 12;
+extern int shiftClock = 11;
+extern int latchClock = 10;
+extern int outEnable = 9;
+extern int serialInput = 8;
 
 
 /*
