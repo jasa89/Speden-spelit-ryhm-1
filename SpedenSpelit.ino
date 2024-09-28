@@ -6,8 +6,13 @@
 // Use these 2 volatile variables for communicating between
 // loop() function and interrupt handlers
 volatile int buttonNumber = -1;           // for buttons interrupt handler
+volatile int buttonNumber2 = -1;          // for buttons interrupt handler 
 volatile int score = 0;
 volatile int interruptCounter = 0;
+
+//for random LED number
+int userNumbers[100];
+int currentIndex = 0;
 
 volatile bool newTimerInterrupt = false;  // for timer interrupt handler
 volatile bool isRunning = false;
@@ -27,40 +32,57 @@ void setup()
 
 }
 
-void loop()
-{
+
+//**********************************
+//          Main loop
+//**********************************
+void loop() {
+
   byte luettu = digitalRead(12);    //TEST
   if (luettu ==LOW) {               //TEST
     buttonNumber++;                 //TEST
     Serial.print("ButtonNumber: "); //TEST
     Serial.println(buttonNumber);   //TEST
+    startTheGame();
   }
-  if(buttonNumber>=0)
-  {
+
+  if(buttonNumber>=0) {
      // start the game if buttonNumber == 4
       isRunning = true;
-      Serial.println("Interrupts enabled");
+      
       luettu = 0;             //TEST
       buttonNumber=-1;
       
      // check the game if 0<=buttonNumber<4
   }
 
-  if(newTimerInterrupt)
-  {
+  if(newTimerInterrupt) {
     newTimerInterrupt = false;
      // new random number must be generated and corresponding led must be activated
 
-    //Generate random number to int variable
-    int ledNumber = random(0,4); 
-    int led = ledNumber;
-    Serial.print("LED: ");
-    Serial.println(led);
-
+    //Generate random number for ledNumber
+    byte ledNumber = random(0,4);            //Generate number for ledNumber
+    userNumbers[currentIndex] = ledNumber;  //Assign ledNumber to array
+    currentIndex++;                         //Increment currentIndex to change array "save slot"
+    Serial.print("LED: ");                  //Print LED value
+    //Serial.println(ledNumber);
     
-
+    //A0 - A3
+      for (int i=0;i>=3;i++) {
+        if (i==ledNumber) {
+          setLed(i);
+          Serial.print(i);
+        }
+      }
   }
+
 }
+
+
+
+//**********************************
+//        Timer/Interrupt
+//**********************************
 
 void initializeTimer(void)
 {
@@ -73,18 +95,18 @@ void initializeTimer(void)
 }
 
 
-ISR(TIMER1_COMPA_vect) //GPT
+ISR(TIMER1_COMPA_vect)
 {
   //  Communicate to loop() that it's time to make new random number. Increase timer interrupt rate after 10 interrupts.
-  Serial.println("interrupt happened");   //TEST
+ // Serial.println("interrupt happened");   //TEST
 
   //Increase interruptCounter by 1
   interruptCounter++;
 
   //after 10 interrupts, increase interrupt rate:
   if (interruptCounter >= 10) {
-    OCR1A = OCR1A / 2;    //Halve the compare value to double the interrupt frequency
-    interruptCounter = 0; //Reset counter
+    OCR1A = OCR1A / 2;        //Halve the compare value to double the interrupt frequency
+    interruptCounter = 0;     //Reset counter
   }
 
   //set newTimerInterrupt to true to generate a new number in loop()
@@ -93,25 +115,43 @@ ISR(TIMER1_COMPA_vect) //GPT
 }
 
 
+
+
+//**********************************
+//          Check Game
+//**********************************
+
 void checkGame(byte nbrOfButtonPush)
 {
 	// see requirements for the function from SpedenSpelit.h
 }
 
 
+
+
+
+//**********************************
+//         initializeGame
+//**********************************
 void initializeGame()
 {
 	// see requirements for the function from SpedenSpelit.h
 }
 
+
+
+
+//**********************************
+//            StartGame
+//**********************************
 void startTheGame()
 {
    // see requirements for the function from SpedenSpelit.h
 
   initializeTimer(); //Activate timer
-  InitializeGame();
-
+  initializeGame();
 
   interrupts(); //Activate interrupts
+  Serial.println("Interrupts enabled");
 }
 
