@@ -4,7 +4,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-
+const int PINS[] = {4,5,6,7};
 const byte firstPin = 4; // First PinChangeInterrupt on D-bus
 const byte lastPin =  7; // Last PinChangeInterrupt on D-bus
 
