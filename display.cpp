@@ -6,7 +6,7 @@ int latchClock = 10;
 int outEnable = 9;
 int serialInput = 8;
 
-byte digitSegments[]= {
+byte digitSegments[]= { //segment numbers
   0x3f, //0
   0x06, //1
   0x5b, //2
@@ -38,8 +38,8 @@ void initializeDisplay(void)
 
 void writeByte(uint8_t bits,bool last)
 {
-  digitalWrite(latchClock, LOW);
-  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegment[bits]);
+  digitalWrite(latchClock, LOW); //
+  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegment[bits]); //Arduino reference shiftOut()
     if(last) {
       digitalWrite(latchClock,HIGH);
     }
@@ -49,8 +49,8 @@ void writeByte(uint8_t bits,bool last)
 
 void writeHighAndLowNumber(uint8_t tens,uint8_t ones)
 {
-  writeByte(tens, false);
-  writeByte(ones, true);
+  writeByte(tens, false); //vasen display
+  writeByte(ones, true);  //oikea display
 // See requirements for this function from display.h
 }
 
