@@ -39,7 +39,7 @@ void initializeDisplay(void)
 void writeByte(uint8_t bits,bool last)
 {
   digitalWrite(latchClock, LOW); //
-  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegment[bits]); //Arduino reference shiftOut()
+  shiftOut(serialInput, shiftClock, MSBFIRST, digitSegments[bits]); //Arduino reference shiftOut()
     if(last) {
       digitalWrite(latchClock,HIGH);
     }
