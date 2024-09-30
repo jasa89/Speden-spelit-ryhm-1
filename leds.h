@@ -31,6 +31,8 @@ void clearAllLeds(void);
 */
 void setAllLeds(void);
 
+void cycleRandomLeds(void);
+// Cycle leds randomly and increase speed after every ten rounds
 /*
   show1() subroutine shows numbers 0,1,...,15 as binary numbers
   waits a bit and repeats number "show"
