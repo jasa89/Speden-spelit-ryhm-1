@@ -43,5 +43,9 @@ void checkGame(byte);
 */
 void startTheGame(void);
 
+void endGame(void);
+/*
+  For ending and resetting the game back to the original state before startTheGame function was called
+*/
 
 #endif
