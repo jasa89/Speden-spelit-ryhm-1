@@ -2,29 +2,37 @@
 #include "buttons.h"
 #include "leds.h"
 #include "SpedenSpelit.h"
+
+//**********************************
+//          Global vars
+//**********************************
+
+volatile int buttonNumber = -1;           //  For buttons interrupt handler
+volatile int buttonNumber2 = -1;          //  For buttons interrupt handler 
+volatile int correctPresses = 0;
+volatile int score = 0;                   //  Track Score
+
+//for random LED
+int userNumbers[100];                     //  Array for random integers (leds)
+int currentLedIndex = 0;                  //  For saving to array
+int currentButtonIndex = 0;               //  For getting the array history
+
+volatile bool newTimerInterrupt = false;  //  For timer interrupt handler
+volatile bool isRunning = false;          //  For setting if the game is running or not
+
+
 //**********************************
 //          Known bugs
 //**********************************
-//BUG: If two numbers are generated after each other the led does not turn off making the game confusing on what to press
-//BUG: Cannot speed up everytime button is pressed the press doesn't always get registered
+/*
+BUG: If two of the same numbers are generated after each other the led does not turn off making the game confusing on what to press
+BUG: Cannot speed up everytime button is pressed the press doesn't always get registered probably a timer issue?
 
+
+*/
 //**********************************
-//          Global Vars
+//            Setup
 //**********************************
-
-volatile int buttonNumber = -1;           // for buttons interrupt handler
-volatile int buttonNumber2 = -1;          // for buttons interrupt handler 
-volatile int score = 0;
-volatile int interruptCounter = 0;
-
-//for random LED number
-int userNumbers[100];
-int currentLedIndex = 0;
-
-int currentButtonIndex = 0;
-
-volatile bool newTimerInterrupt = false;  // for timer interrupt handler
-volatile bool isRunning = false;
 
 void setup()
 {
@@ -73,10 +81,10 @@ void loop() {
      // new random number must be generated and corresponding led must be activated
 
     //Generate random number for ledNumber
-    byte ledNumber = random(0,4);           //Generate number for ledNumber
-    userNumbers[currentLedIndex] = ledNumber;  //Assign ledNumber to array
-    currentLedIndex++;                         //Increment currentIndex to change array "save slot"
-    setLed(ledNumber);                      //call function setLed from leds.cpp
+    byte ledNumber = random(0,4);             //Generate number for ledNumber
+    userNumbers[currentLedIndex] = ledNumber; //Assign ledNumber to array
+    currentLedIndex++;                        //Increment currentIndex to change array "save slot"
+    setLed(ledNumber);                        //Call function setLed from leds.cpp to light the led
 
 //--------TEST CODE-------------
     Serial.print("LED: ");  
@@ -101,7 +109,7 @@ void initializeTimer(void)  {
   OCR1A = 250000;      // OCIE1A = Output Compare Interrupt Enable 1A 
   //^ When the counter reaches 250,000, it triggers an interrupt on TCCR1A, then resets to 0 and starts counting again. 250000 / X = Y so interrupt happens every F seconds
   TIMSK1 = 2;         
-  //^ Kun arvo ylittyy tulee keskeytys.(?)
+  //^ Kun arvo ylittyy tulee keskeytys(?) hämmentävä setti.
 }
 
 
@@ -114,39 +122,53 @@ ISR(TIMER1_COMPA_vect)  {
 
 
 //Only get faster after 10 correct button presses (not implemented yet) only works with a regular button press ignoring whether press was correct or not
+//This IF probably belongs in function checkGame()
 
   if (buttonPress==LOW) {
 
     int correctLed = userNumbers[currentButtonIndex]; //Store corresponding array value to correctLed determined by currentButtonIndex to get the history of leds
-    currentButtonIndex++;                             //Increment currentButtonIndex by one to get the next led value
+      
+    if (correctLed == nbrOfButtonPush) {  //if led is the same as the button that was pressed do increment    ! Implement nbrOfButtonPush !
+        correctPresses++;
+        currentButtonIndex++;         //Increment currentButtonIndex by one to get the next led value
+    }
+
+    while(correctPresses>=10) {   //after 10 correct button presses, increase interrupt rate
+      OCR1A = OCR1A / 1.2;        //Divide OCR1A value to speed up
+      correctPresses = 0;
+    }
     
 //--------TEST CODE-----------------------
     Serial.print("LED history:");
     Serial.println(correctLed);
 //--------END OF TEST CODE---------------
-
-  //after 10 interrupts, increase interrupt rate:
-
-    OCR1A = OCR1A / 1.2;        //Divide OCR1A value to speed up
   }
 
   //set newTimerInterrupt to true to generate a new number in loop()
   newTimerInterrupt = true;
-
-//--------TEST CODE------------------------
-  //Serial.println(interruptCounter); 
-//--------END OF TEST CODE-------------
 }
 
 
 
 
 //**********************************
-//          Check Game
+//          Check game
 //**********************************
 
 void checkGame(byte nbrOfButtonPush)  {
-	// see requirements for the function from SpedenSpelit.h
+	/*
+  checkGame() subroutine is used to check the status
+  of the Game after each player button press.
+  
+  If the latest player button press is wrong, the game stops
+  and if the latest press was right, game display is incremented
+  by 1.
+  
+  Parameters
+  byte lastButtonPress of the player 0 or 1 or 2 or 3
+  
+*/
+
 }
 
 
@@ -154,17 +176,23 @@ void checkGame(byte nbrOfButtonPush)  {
 
 
 //**********************************
-//         initializeGame
+//         Initialize Game
 //**********************************
 void initializeGame() {
-	// see requirements for the function from SpedenSpelit.h
+
+/*
+  initializeGame() subroutine is used to initialize all variables
+  needed to store random numbers and player button push data.
+  This function is called from startTheGame() function.
+  
+*/
 }
 
 
 
 
 //**********************************
-//            StartGame
+//          Start the game
 //**********************************
 void startTheGame() {
    // see requirements for the function from SpedenSpelit.h
@@ -180,3 +208,17 @@ void startTheGame() {
   }
 }
 
+//**********************************
+//           End the game
+//**********************************
+void endGame() {
+  noInterrupts();          //disable interrupts
+    for(int j=0;j<150;j++) {  //do something cool
+      setAllLeds();
+    }
+
+  Serial.println("REBOOTING");
+  delay(50);
+  pinMode(7,OUTPUT);
+  digitalWrite(7,LOW);
+}
