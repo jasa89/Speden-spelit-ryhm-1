@@ -1,4 +1,6 @@
-#include "leds.h"
+
+
+#include "leds_test.h"
 
 // Define the initializeLeds() function
 void initializeLeds() {
@@ -9,13 +11,16 @@ void initializeLeds() {
 }
 
 // Global variables for millis() timing
-unsigned long previousMillis = 0; // Store the last time an LED was updated
-unsigned long interval = 1000;    // Start with 1 second (1000ms)
-int cycleCount = 0;               // Track number of cycles for speed increase
-bool initialLedsOn = true;        // Track whether all LEDs were turned on initially
-int previousLed = -1;             // Variable to store the previously lit LED prevent the same led to be lit twice in a row
+unsigned long previousMillis = 0;     // Store the last time an LED was updated
+unsigned long interval = 1000;        // Start with 1 second (1000ms)
+unsigned long offTime = 200;          // Time for LED to stay off between cycles
+int cycleCount = 0;                   // Track number of cycles for speed increase
+bool initialLedsOn = true;            // Track whether all LEDs were turned on initially
+int previousLed = -1;                 // Variable to store the previously lit LED
+bool ledOn = false;                   // Track if an LED is currently on
 
 const unsigned long MIN_INTERVAL = 100; // Set the minimum speed (100ms)
+
 
 
 // Set the specified LED and turn off all others
@@ -58,18 +63,22 @@ void cycleRandomLeds() {
         return;
     }
 
-    // Check if the interval has passed
-    if (currentMillis - previousMillis >= interval) {
+    // If an LED is currently on and the interval has passed, turn it off
+    if (ledOn && currentMillis - previousMillis >= interval) {
+        clearAllLeds();          // Turn off all LEDs
+        ledOn = false;           // Set flag to indicate LEDs are off
+        previousMillis = currentMillis; // Update previousMillis to current time
+    }
+    // If the LEDs are off and the offTime has passed, turn on the next LED
+    else if (!ledOn && currentMillis - previousMillis >= offTime) {
         previousMillis = currentMillis; // Save the current time
 
-        // Choose a random LED, ensuring it's different from the previous one
+        // Choose a random LED
         int randomLed = random(0, 4);
-        while (randomLed == previousLed) {
-            randomLed = random(0, 4); // Keep generating a new random LED until it's different
-        }
 
-        setLed(randomLed); // Set the randomly chosen LED
+        setLed(randomLed);       // Set the randomly chosen LED
         previousLed = randomLed; // Update previousLed to the current one
+        ledOn = true;            // Set flag to indicate LEDs are on
 
         // Print to track LED changes
         Serial.print("Random LED: ");
@@ -88,6 +97,14 @@ void cycleRandomLeds() {
         }
     }
 }
+
+
+
+
+
+
+
+
 
 
 
