@@ -43,9 +43,10 @@ void setup()
   //  Initialize all modules
   Serial.begin(9600); //TEST
 
-  void initButtonsAndButtonInterrupts(void);
+ // void initButtonsAndButtonInterrupts(void); Defined in leds.h
   void initializeDisplay(void);
   void initializeLeds();
+  pinMode(13,INPUT);
   
 }
 
@@ -59,9 +60,11 @@ void loop() {
   byte buttonPress = digitalRead(4);  //TEST
   byte buttonPress2 = digitalRead(7);  //TEST
 
-  if (buttonPress==LOW && buttonPress2==LOW) {            //start the game if ports 4 and 7 are pressed     
-    buttonNumber++;
-    startGame();
+  while (isRunning==false) {            //start the game if ports 4 and 7 are pressed     
+    if(buttonState > 8) {
+      startGame();
+    }
+    
   }
 
   if(newTimerInterrupt) {
@@ -139,7 +142,7 @@ void checkGame()  {
 
 //compare arrays to currentLedIndex (i), if userNumbers wont match randomNumbers then end the game
 for (int i=0; i<=currentLedIndex;i++) {
-  if (userNumbers[i] != randomNumbers[i ) {
+  if (userNumbers[i] != randomNumbers[i] ) {
     endGame();
   }
 
@@ -176,7 +179,7 @@ void initializeGame() {
 //**********************************
 //          Start the game
 //**********************************
-void startTheGame() {
+void startGame() {
    // see requirements for the function from SpedenSpelit.h
   if (isRunning == false) {
   cycleRandomLeds(); //Needs delay?
@@ -197,14 +200,15 @@ void startTheGame() {
 void endGame() {
   sei();          //disable interrupts
   isRunning = false;
-    for(int j=0;j<150;j++) {  //do something cool
+    for(int j=0;j<3;j++) {  //do something cool
       setAllLeds();
+      delay(1000);
     }
 
   Serial.println("REBOOTING");
   delay(50);
-  pinMode(7,OUTPUT);
-  digitalWrite(7,LOW);
+  pinMode(13,OUTPUT);
+  digitalWrite(13,LOW);
 }
 
 //**********************************
