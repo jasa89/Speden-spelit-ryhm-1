@@ -186,7 +186,7 @@ void startGame() {
   initializeTimer(); //Activate timer
   initializeGame();
 
-  cli(); //Activate interrupts
+  sei(); //Activate interrupts
   isRunning = true;
 //--------TEST CODE--------------------------
  // Serial.println("Interrupts enabled");
@@ -198,7 +198,7 @@ void startGame() {
 //           End the game
 //**********************************
 void endGame() {
-  sei();          //disable interrupts
+  cli();          //disable interrupts
   isRunning = false;
     for(int j=0;j<3;j++) {  //do something cool
       setAllLeds();
@@ -216,4 +216,3 @@ void endGame() {
 //**********************************
 // https://www.w3schools.com/
 // https://stackoverflow.com/questions/24153883/comparing-two-arrays-in-c-element-by-element
-//
