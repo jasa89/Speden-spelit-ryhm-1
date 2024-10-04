@@ -62,7 +62,10 @@ void loop() {
 
   while (isRunning==false) {            //start the game if ports 4 and 7 are pressed     
     if(buttonState > 8) {
+	Serial.println("STARTING"); //TEST
+	isRunning = true;
       startGame();
+
     }
     
   }
@@ -181,13 +184,12 @@ void initializeGame() {
 //**********************************
 void startGame() {
    // see requirements for the function from SpedenSpelit.h
-  if (isRunning == false) {
+  if (isRunning == true) {
   cycleRandomLeds(); //Needs delay?
   initializeTimer(); //Activate timer
   initializeGame();
-
   sei(); //Activate interrupts
-  isRunning = true;
+
 //--------TEST CODE--------------------------
  // Serial.println("Interrupts enabled");
 //--------END OF TEST CODE---------------------
