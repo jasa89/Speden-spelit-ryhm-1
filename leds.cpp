@@ -1,7 +1,7 @@
 
 
 #include "leds.h"
-
+ randomSeed(analogRead(0)); // Seed the random number generator
 // Define the initializeLeds() function
 void initializeLeds() {
     pinMode(A0, OUTPUT);
