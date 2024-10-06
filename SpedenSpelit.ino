@@ -13,16 +13,18 @@ volatile int score = 0;                   //  Track Score
 //for random LED
 int randomNumbers[100];                   //  Array for random integers (leds)
 int currentLedIndex = 0;                  //  For saving to array
-volatile byte buttonState=0;
+
 //for buttons
 int currentButtonIndex = 0;               //  For getting the array history
 int userNumbers[100];                     //  Array for button presses
 volatile int correctPresses = 0;          //  For tracking correct presses to speed up the leds
 volatile int buttonNumber = -1;           //  For buttons interrupt handler
+volatile byte buttonState=0;
+
 
 volatile bool newTimerInterrupt = false;  //  For timer interrupt handler
 volatile bool checkGameStatus = false;
-volatile bool isRunning = false;          //  For setting if the game is running or not
+volatile bool gameActive = false;          //  For setting if the game is running or not
 
 
 //**********************************
@@ -31,8 +33,9 @@ volatile bool isRunning = false;          //  For setting if the game is running
 /*
 BUG: If two of the same numbers are generated after each other the led does not turn off making the game confusing on what to press
 BUG: Cannot speed up everytime button is pressed the press doesn't always get registered probably a timer issue?
-BUG: NOT TESTED! Most likely array comparison will end the game everytime if the player is slower than the leds which is how it should not work since it's okay for the player to be slower as long as the button presses are correct
-BUG: NOT TESTED! Led effect cycleRandomLeds() probably won't play correctly when starting the game
+BUG: in .ino: Conflicting declaration 'volatile byte buttonState' volatile byte buttonState=0;	This variable is in buttons.h too? Removing this from .ino results in more errors relating to initButtonsAndButtonInterrupts() like multiple definition of `buttonState'.
+BUG: in .ino: Previous declaration as 'int buttonState' int buttonState = 0;	This variable is in buttons.h too?
+BUG: in buttons: ultiple definition of `changed'
 */
 //**********************************
 //            Setup
@@ -43,10 +46,10 @@ void setup()
   //  Initialize all modules
   Serial.begin(9600); //TEST
 
- // void initButtonsAndButtonInterrupts(void); Defined in leds.h
+  void initButtonsAndButtonInterrupts(void);
   void initializeDisplay(void);
   void initializeLeds();
-  pinMode(13,INPUT);
+  pinMode(13,INPUT); //for reset
   
 }
 
@@ -57,17 +60,16 @@ void setup()
 void loop() {
 
 //This is supposed to be true when (undecided) two buttons are pressed
-  byte buttonPress = digitalRead(4);  //TEST
-  byte buttonPress2 = digitalRead(7);  //TEST
 
-  while (isRunning==false) {            //start the game if ports 4 and 7 are pressed     
-    if(buttonState > 8) {
-	Serial.println("STARTING"); //TEST
-	isRunning = true;
+
+  while (gameActive==false) {                            //While loop for waiting user to start the game via inputs
+    Serial.println("in while waiting for start input");
+
+      if(buttonState>=8)  {                             //Start game by calling startGame function if buttonState is more or equal to 8 meaning two buttons must be pressed for this to be true
+      Serial.println("Starting..");
+      gameActive = true;
       startGame();
-
-    }
-    
+      }
   }
 
   if(newTimerInterrupt) {
@@ -86,8 +88,6 @@ void loop() {
   }
 }
 
-
-
 //**********************************
 //        Timer/Interrupt
 //**********************************
@@ -100,8 +100,9 @@ void initializeTimer(void)  {
   //^ B:n prescaleriksi arvo 256. Kello pyörii 16MHz taajuudella, montako pulssia (prescaler) mennään, että tulee yhden timer counter arvo isommaksi. 
   OCR1A = 250000;      // OCIE1A = Output Compare Interrupt Enable 1A 
   //^ When the counter reaches 250,000, it triggers an interrupt on TCCR1A, then resets to 0 and starts counting again. 250000 / X = Y so interrupt happens every F seconds
-  TIMSK1 = 2;         
+  TIMSK1 = 2;
   //^ Kun arvo ylittyy tulee keskeytys(?) hämmentävä setti.
+  sei();
 }
 
 
@@ -110,47 +111,36 @@ ISR(TIMER1_COMPA_vect)  {
 
   //set newTimerInterrupt to true to generate a new number in loop()
   newTimerInterrupt = true;
+  Serial.println("running TIMER1");
 }
 
-ISR(PCINT2_vect) 
-/*
-{ //Button interrupt handler
-
-  for(int k=4; k<=7;k++) {
-    if (digitalRead(PINS[k]) == LOW) {                //Check PINS from 4 to 7 if some of them are low
-      int buttonNumber = digitalRead(PINS[k]);            //Save the PIN value to variable
-      userNumbers[currentButtonIndex] = buttonNumber; //Save the PIN value to array
-      currentButtonIndex++;                           //Increment currentIndex to change array "save slot"
-      checkGameStatus = true;                         //set checkGameStatus to true to check if the press was correct
-    }
-  }
-}
-*/
+ISR(PCINT2_vect)	//Does not trigger?
 {
-        static unsigned long lastInterrupTimeStamp=0;
-        unsigned long interrupTimeStamp=millis();
-        if (interrupTimeStamp - lastInterrupTimeStamp > 240)
-        {
-            buttonState=0;
-        
-          for(int i = 0; i < 4; i++)
-            {
-            if(digitalRead(PINS[i]) == LOW)
-	    {
-		    buttonState |= 1<<i;
-		    userNumbers[currentButtonIndex]=i;
-            	    numberCounter++;
-            	    checkGameStatus=true;
-	    }
-	    }
-		    lastInterrupTimeStamp=interrupTimeStamp;
-        }
+  Serial.println("running PCINT2_vect");
+  static unsigned long lastInterrupTimeStamp=0;
+  unsigned long interrupTimeStamp=millis();
 
+    if (interrupTimeStamp - lastInterrupTimeStamp > 240)  {
+      buttonState=0;  
+
+        for(int i = 0; i < 4; i++)  {
+
+            if(digitalRead(PINS[i]) == LOW) {
+		          buttonState |= 1<<i;
+		          userNumbers[currentButtonIndex]=i;
+            	currentButtonIndex++;
+            	checkGameStatus=true;
+	          }
+	        }
+
+	    lastInterrupTimeStamp=interrupTimeStamp;
+    }
+}
 //**********************************
 //          Check game
 //**********************************
 
-void checkGame()  {
+void checkGame() {
 	/*
   checkGame() subroutine is used to check the status
   of the Game after each player button press.
@@ -161,23 +151,25 @@ void checkGame()  {
   
   Parameters
   byte lastButtonPress of the player 0 or 1 or 2 or 3
-  
 */
+  Serial.println("running checkGame");
+//compare arrays to currentButtonIndex (i), if userNumbers won't match randomNumbers then end the game (maybe belongs in PCINT2_vect?)
+    for (int i=0; i<=currentButtonIndex;i++) {
+       if (userNumbers[i] != randomNumbers[i] ) {    //userNumbers = button press history --- randomNumbers = led history
+        endGame();
+      }
 
-//compare arrays to currentLedIndex (i), if userNumbers wont match randomNumbers then end the game
-for (int i=0; i<=currentLedIndex;i++) {
-  if (userNumbers[i] != randomNumbers[i] ) {
-    endGame();
-  }
-
-    else {
-      checkGameStatus = false;
-      correctPresses++;
+      else {
+        correctPresses++;
+        score += 10;
+        showResult(score);
+        checkGameStatus = false;
     }
+
 //Only get faster after 10 correct button presses, probably need a better solution for speeding up instead of correctPresses >=10
-  if (correctPresses >=10) {
-      OCR1A = OCR1A / 1.2;
-      correctPresses = 0;
+      if (correctPresses >=10) {
+        OCR1A = OCR1A / 1.2;
+        correctPresses = 0;
     }
   }
 }
@@ -205,15 +197,12 @@ void initializeGame() {
 //**********************************
 void startGame() {
    // see requirements for the function from SpedenSpelit.h
-  if (isRunning == true) {
-  cycleRandomLeds(); //Needs delay?
-  initializeTimer(); //Activate timer
-  initializeGame();
-  sei(); //Activate interrupts
-
-//--------TEST CODE--------------------------
- // Serial.println("Interrupts enabled");
-//--------END OF TEST CODE---------------------
+  if (gameActive == true) {
+    cycleRandomLeds(); //Needs delay?
+    initializeTimer(); //Activate timer
+    initializeGame();
+    Serial.println("STARTING");
+    sei(); //Activate interrupts
   }
 }
 
@@ -221,14 +210,14 @@ void startGame() {
 //           End the game
 //**********************************
 void endGame() {
-  cli();          //disable interrupts
-  isRunning = false;
+  cli();                    //disable interrupts
+  Serial.println("running endGame");
+  gameActive = false;
+
     for(int j=0;j<3;j++) {  //do something cool
       setAllLeds();
       delay(1000);
     }
-
-  Serial.println("REBOOTING");
   delay(50);
   pinMode(13,OUTPUT);
   digitalWrite(13,LOW);
@@ -239,3 +228,18 @@ void endGame() {
 //**********************************
 // https://www.w3schools.com/
 // https://stackoverflow.com/questions/24153883/comparing-two-arrays-in-c-element-by-element
+
+//**********************************
+//    Clipboard for copypasting     
+//**********************************
+/* COMPARE 
+    for(int k=4; k<=7;k++) {
+    if (digitalRead(PINS[k]) == LOW) {                //Check PINS from 4 to 7 if some of them are low
+      Serial.print("comparing");
+      int buttonNumber = digitalRead(PINS[k]);        //Save the PIN value to variable
+      userNumbers[currentButtonIndex] = buttonNumber; //Save the PIN value to array
+      currentButtonIndex++;                           //Increment currentIndex to change array "save slot"
+      checkGameStatus = true;                         //set checkGameStatus to true to check if the press was correct
+    }
+  }
+*/
