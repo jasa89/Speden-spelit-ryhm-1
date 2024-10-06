@@ -1,7 +1,8 @@
 #include "buttons.h"
+const int PIN[] = {4,5,6,7};
 
 
-
+ 
 
 void initButtonsAndButtonInterrupts(void)
 {
@@ -12,26 +13,7 @@ PCICR |= B00000100;
 PCMSK2 |= B11110000;
  for (int i = 0; i < 4 ; i++)
       {
-        pinMode(PINS[i], INPUT_PULLUP);
+        pinMode(PIN[i], INPUT_PULLUP);
 
       } 
-}
-// Source-material : https://www.circuits-diy.com/button-debounce-arduino-tutorial/
-// https://deepbluembedded.com/arduino-button-debouncing/
-ISR(PCINT2_vect)
-{
-        static unsigned long lastInterrupTimeStamp=0;
-        unsigned long interrupTimeStamp=millis();
-        if (interrupTimeStamp - lastInterrupTimeStamp > 100)
-        {
-        	buttonState=0;
-        
-          	for(int i = 0; i < 4; i++)
-            		{
-            			if(digitalRead(PINS[i]) == LOW)
-              			buttonState |= 1<<i;
-            		}
-        	changed=1;
-        }
-        lastInterrupTimeStamp=interrupTimeStamp;
 }
