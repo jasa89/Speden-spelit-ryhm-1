@@ -13,7 +13,7 @@ volatile int score = 0;                   //  Track Score
 //for random LED
 int randomNumbers[100];                   //  Array for random integers (leds)
 int currentLedIndex = 0;                  //  For saving to array
-
+volatile byte buttonState=0;
 //for buttons
 int currentButtonIndex = 0;               //  For getting the array history
 int userNumbers[100];                     //  Array for button presses
@@ -112,7 +112,9 @@ ISR(TIMER1_COMPA_vect)  {
   newTimerInterrupt = true;
 }
 
-ISR(PCINT2_vect) { //Button interrupt handler
+ISR(PCINT2_vect) 
+/*
+{ //Button interrupt handler
 
   for(int k=4; k<=7;k++) {
     if (digitalRead(PINS[k]) == LOW) {                //Check PINS from 4 to 7 if some of them are low
@@ -123,7 +125,26 @@ ISR(PCINT2_vect) { //Button interrupt handler
     }
   }
 }
-
+*/
+{
+        static unsigned long lastInterrupTimeStamp=0;
+        unsigned long interrupTimeStamp=millis();
+        if (interrupTimeStamp - lastInterrupTimeStamp > 240)
+        {
+            buttonState=0;
+        
+          for(int i = 0; i < 4; i++)
+            {
+            if(digitalRead(PINS[i]) == LOW)
+	    {
+		    buttonState |= 1<<i;
+		    userNumbers[currentButtonIndex]=i;
+            	    numberCounter++;
+            	    checkGameStatus=true;
+	    }
+	    }
+		    lastInterrupTimeStamp=interrupTimeStamp;
+        }
 
 //**********************************
 //          Check game
