@@ -17,3 +17,24 @@ PCMSK2 |= B11110000;
 
       } 
 }
+
+int readButtons()
+{
+  int button=0;  
+  for(int i = 0; i < 4; i++)
+      {
+        if(digitalRead(PIN[i]) == LOW)
+              button |= 1<<i;
+      }
+            
+            //chosenNumbers[numberCounter]=buttonState;
+            //numberCounter++;
+            //buttonRead=true;
+    return(button);          
+  }
+
+int whatButton( int w)
+{
+  int buttonstate= w/2;
+  return buttonstate;
+} 
