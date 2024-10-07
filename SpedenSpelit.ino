@@ -195,7 +195,6 @@ void startGame() {
    // see requirements for the function from SpedenSpelit.h
   if (gameActive == true) {
     cycleRandomLeds(); //Needs delay?
-    delay(5000);
     initializeTimer(); //Activate timer
     initializeGame();
     Serial.println("STARTING GAME");
