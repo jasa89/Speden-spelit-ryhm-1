@@ -49,8 +49,6 @@ void setup()
   initButtonsAndButtonInterrupts();
   initializeDisplay();
   initializeLeds();
-  pinMode(13,INPUT); //for reset
-  
 }
 
 
@@ -66,7 +64,6 @@ void loop() {
     Serial.println("in while waiting for start input");
 
       if(buttonState>=8)  {                             //Start game by calling startGame function if buttonState is more or equal to 8 meaning two buttons must be pressed for this to be true
-      Serial.println("Starting..");
       gameActive = true;
       startGame();
       }
@@ -199,10 +196,11 @@ void startGame() {
    // see requirements for the function from SpedenSpelit.h
   if (gameActive == true) {
     cycleRandomLeds(); //Needs delay?
+    delay(5000);
     initializeTimer(); //Activate timer
     initializeGame();
-    Serial.println("STARTING");
-    sei(); //Activate interrupts
+    Serial.println("STARTING GAME");
+    interrupts(); //Activate interrupts
   }
 }
 
@@ -210,17 +208,9 @@ void startGame() {
 //           End the game
 //**********************************
 void endGame() {
-  cli();                    //disable interrupts
+  noInterrupts();
   Serial.println("running endGame");
   gameActive = false;
-
-    for(int j=0;j<3;j++) {  //do something cool
-      setAllLeds();
-      delay(1000);
-    }
-  delay(50);
-  pinMode(13,OUTPUT);
-  digitalWrite(13,LOW);
 }
 
 //**********************************
