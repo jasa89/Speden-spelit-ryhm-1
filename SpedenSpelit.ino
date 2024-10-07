@@ -26,15 +26,14 @@ volatile bool newTimerInterrupt = false;  //  For timer interrupt handler
 volatile bool checkGameStatus = false;
 volatile bool gameActive = false;          //  For setting if the game is running or not
 
-
 //**********************************
 //          Known bugs
 //**********************************
 /*
 BUG: If two of the same numbers are generated after each other the led does not turn off making the game confusing on what to press
 BUG: setAllLeds() function only lights up two leds
-BUG: Buttons seem to bounce causing various problems
-BUG: when endGame() is ran the game doesn't reset
+BUG: Buttons seem to bounce causing various problems like making the player fail on the 1st button press even if correct.
+BUG: when endGame() is called the game doesn't reset, just hangs
 */
 //**********************************
 //            Setup
@@ -48,6 +47,8 @@ void setup()
   initButtonsAndButtonInterrupts();
   initializeDisplay();
   initializeLeds();
+  pinMode(13,INPUT); //for reset
+  
 }
 
 
@@ -60,9 +61,14 @@ void loop() {
 
 
   while (gameActive==false) {                            //While loop for waiting user to start the game via inputs
-    Serial.println("in while waiting for start input");
-
+    setAllLeds();
       if(buttonState>=8)  {                             //Start game by calling startGame function if buttonState is more or equal to 8 meaning two buttons must be pressed for this to be true
+      Serial.println("Starting in: 3");
+      delay(1000);
+      Serial.println("Starting in: 2");
+      delay(1000);
+      Serial.println("Starting in: 1");
+      delay(1000);
       gameActive = true;
       startGame();
       }
@@ -110,15 +116,15 @@ ISR(TIMER1_COMPA_vect)  {
   Serial.println("running TIMER1");
 }
 
-ISR(PCINT2_vect)	//Does not trigger?
+ISR(PCINT2_vect)
 {
+  
   Serial.println("running PCINT2_vect");
   static unsigned long lastInterrupTimeStamp=0;
   unsigned long interrupTimeStamp=millis();
-
     if (interrupTimeStamp - lastInterrupTimeStamp > 240)  {
       buttonState=0;  
-
+      
         for(int i = 0; i < 4; i++)  {
 
             if(digitalRead(PINS[i]) == LOW) {
@@ -126,12 +132,15 @@ ISR(PCINT2_vect)	//Does not trigger?
 		          userNumbers[currentButtonIndex]=i;
             	currentButtonIndex++;
             	checkGameStatus=true;
+              
 	          }
 	        }
 
 	    lastInterrupTimeStamp=interrupTimeStamp;
+
     }
 }
+
 //**********************************
 //          Check game
 //**********************************
@@ -149,7 +158,7 @@ void checkGame() {
   byte lastButtonPress of the player 0 or 1 or 2 or 3
 */
   Serial.println("running checkGame");
-//compare arrays to currentButtonIndex (i), if userNumbers won't match randomNumbers then end the game (maybe belongs in PCINT2_vect?)
+//compare arrays to currentButtonIndex (i), if userNumbers dont't match randomNumbers then end the game (maybe belongs in PCINT2_vect?)
     for (int i=0; i<=currentButtonIndex;i++) {
        if (userNumbers[i] != randomNumbers[i] ) {    //userNumbers = button press history --- randomNumbers = led history
         endGame();
@@ -160,6 +169,8 @@ void checkGame() {
         score += 10;
         showResult(score);
         checkGameStatus = false;
+        Serial.print("Correct Presses:");
+        Serial.println(correctPresses);
     }
 
 //Only get faster after 10 correct button presses, probably need a better solution for speeding up instead of correctPresses >=10
@@ -183,8 +194,11 @@ void initializeGame() {
   This function is called from startTheGame() function.
   
 */
-}
 
+  currentButtonIndex = 0;
+  currentLedIndex = 0;
+  showResult(0);
+}
 
 
 
@@ -195,8 +209,9 @@ void startGame() {
    // see requirements for the function from SpedenSpelit.h
   if (gameActive == true) {
     cycleRandomLeds(); //Needs delay?
-    initializeTimer(); //Activate timer
     initializeGame();
+    initializeTimer(); //Activate timer
+
     Serial.println("STARTING GAME");
     interrupts(); //Activate interrupts
   }
