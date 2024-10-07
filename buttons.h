@@ -5,8 +5,8 @@
 #include <avr/interrupt.h>
 
 const int PINS[] = {4,5,6,7};
-volatile int changed=0;
-int buttonState = 0; 
+
+ 
 /*  if button 1 pressed , value is 1
     if button 2 pressed , value is 2
     if button 3 pressed , value is 4
