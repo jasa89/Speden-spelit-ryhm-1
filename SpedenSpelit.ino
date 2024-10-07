@@ -32,10 +32,9 @@ volatile bool gameActive = false;          //  For setting if the game is runnin
 //**********************************
 /*
 BUG: If two of the same numbers are generated after each other the led does not turn off making the game confusing on what to press
-BUG: Cannot speed up everytime button is pressed the press doesn't always get registered probably a timer issue?
-BUG: in .ino: Conflicting declaration 'volatile byte buttonState' volatile byte buttonState=0;	This variable is in buttons.h too? Removing this from .ino results in more errors relating to initButtonsAndButtonInterrupts() like multiple definition of `buttonState'.
-BUG: in .ino: Previous declaration as 'int buttonState' int buttonState = 0;	This variable is in buttons.h too?
-BUG: in buttons: ultiple definition of `changed'
+BUG: setAllLeds() function only lights up two leds
+BUG: Buttons seem to bounce causing various problems
+BUG: when endGame() is ran the game doesn't reset
 */
 //**********************************
 //            Setup
