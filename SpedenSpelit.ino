@@ -45,10 +45,10 @@ void setup()
 {
   //  Initialize all modules
   Serial.begin(9600); //TEST
-
-  void initButtonsAndButtonInterrupts(void);
-  void initializeDisplay(void);
-  void initializeLeds();
+  //Changed inits to fuction calls.
+  initButtonsAndButtonInterrupts();
+  initializeDisplay();
+  initializeLeds();
   pinMode(13,INPUT); //for reset
   
 }
