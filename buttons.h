@@ -30,6 +30,6 @@ void initButtonsAndButtonInterrupts(void);
 // Intoduce PCINT2_vect Interrupt SeRvice (ISR) function for Pin Change Interrupt.
 ISR(PCINT2_vect); 
 //functons interrupt uses
-int readButtons(void);
+int readButton(void);
 int whatButton(int);
 #endif;
