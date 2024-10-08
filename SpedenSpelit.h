@@ -33,7 +33,7 @@ void initializeGame(void);
   byte lastButtonPress of the player 0 or 1 or 2 or 3
   
 */
-void checkGame(byte);
+void checkGame(void);
 
 
 /*
@@ -41,7 +41,7 @@ void checkGame(byte);
   function and enables Timer1 interrupts to start
   the Game.
 */
-void startTheGame(void);
+void startGame(void);
 
 void endGame(void);
 /*
