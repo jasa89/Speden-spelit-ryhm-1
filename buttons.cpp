@@ -18,7 +18,7 @@ PCMSK2 |= B11110000;
       } 
 }
 
-int readButtons()
+int readButton()
 {
   int button=0;  
   for(int i = 0; i < 4; i++)
@@ -35,6 +35,28 @@ int readButtons()
 
 int whatButton( int w)
 {
-  int buttonstate= w/2;
-  return buttonstate;
+  //int buttonstate= w/2;
+  //return buttonstate;
+   int convertedLedValue= 5;
+   switch (w) {
+  case 1:
+    convertedLedValue= 0;
+    break;
+  case 2:
+    convertedLedValue= 1;
+    break;
+  case 4:
+    convertedLedValue= 2;
+    break;
+  case 8:
+    convertedLedValue= 3;
+    break;
+  default:
+    convertedLedValue= 4;
+    break;
 } 
+
+    return(convertedLedValue) ;
+
+} 
+
