@@ -66,14 +66,21 @@ void loop() {
     setAllLeds();
   
   if((buttonState>=1) && (gameActive==false))  {                             //Start game by calling startGame function if buttonState is more or equal to 8 meaning two buttons must be pressed for this to be true
+      buttonState=0;
+      currentButtonIndex = 0;
+      checkGameStatus=false;
       Serial.println("Starting in: 3");
+      showResult(3);
       delay(1000);
       Serial.println("Starting in: 2");
+      showResult(2);
       delay(1000);
       Serial.println("Starting in: 1");
+      showResult(score);
       delay(1000);
+      showResult(0);
       gameActive = true;
-      buttonState=0;
+      
       startGame();
       }
   }
