@@ -76,7 +76,7 @@ void loop() {
       showResult(2);
       delay(1000);
       Serial.println("Starting in: 1");
-      showResult(score);
+      showResult(1);
       delay(1000);
       showResult(0);
       gameActive = true;
