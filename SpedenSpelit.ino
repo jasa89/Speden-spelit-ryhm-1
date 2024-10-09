@@ -95,7 +95,7 @@ void loop() {
     currentLedIndex++;   //Increment currentIndex to change array "save slot"
     Serial.print("Press button:");
     Serial.println(ledNumber);
-    delay (3000);
+    //delay (3000);
     setLed(ledNumber);                       //Call function setLed from leds.cpp to light the led
     //testisetti itsekseenpeluuta varten
     /*if (currentLedIndex - currentButtonIndex > 1 )
@@ -156,7 +156,7 @@ ISR(TIMER1_COMPA_vect)  {
           userNumbers[currentButtonIndex]=whatButton(buttonState);
           Serial.print("Pressed:");
           Serial.println(userNumbers[currentButtonIndex]);
-          delay(1000);
+          //delay(1000);
           currentButtonIndex++;
           checkGameStatus=true;
           }
@@ -194,7 +194,7 @@ void checkGame() {
       else {
         correctPresses++;
     
-        score += 10;
+        score++;
         showResult(score);
         testedButtonIndex++;
         if (testedButtonIndex == currentButtonIndex ) checkGameStatus = false;
