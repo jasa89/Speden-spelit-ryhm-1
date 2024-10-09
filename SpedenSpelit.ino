@@ -254,6 +254,7 @@ void endGame() {
   currentButtonIndex = 0;
   buttonState=0;
   correctPresses = 0;
+  score=0;
   OCR1A = 250000;
   delay(1000);
   sei();
