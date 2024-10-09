@@ -67,15 +67,11 @@ void loop() {
   
   if((buttonState>=1) && (gameActive==false))  {                             //Start game by calling startGame function if buttonState is more or equal to 8 meaning two buttons must be pressed for this to be true
       Serial.println("Starting in: 3");
-      showResult(3);
       delay(1000);
       Serial.println("Starting in: 2");
-      showResult(2);
       delay(1000);
       Serial.println("Starting in: 1");
-      showResult(1);
       delay(1000);
-      showResult(0);
       gameActive = true;
       buttonState=0;
       startGame();
@@ -84,13 +80,25 @@ void loop() {
 
   if(newTimerInterrupt) {
     newTimerInterrupt = false;
+     // new random number must be generated and corresponding led must be activated
+
+    //Generate random number for ledNumber
     byte ledNumber = random(0,4);             //Generate number for ledNumber
     randomNumbers[currentLedIndex] = ledNumber; //Assign ledNumber to array
     currentLedIndex++;   //Increment currentIndex to change array "save slot"
     Serial.print("Press button:");
     Serial.println(ledNumber);
+    delay (3000);
     setLed(ledNumber);                       //Call function setLed from leds.cpp to light the led
-
+    //testisetti itsekseenpeluuta varten
+    /*if (currentLedIndex - currentButtonIndex > 1 )
+    {
+      userNumbers[currentButtonIndex] = randomNumbers[currentButtonIndex] ;
+      currentButtonIndex++;
+     
+      checkGameStatus=true;
+    }
+*/
   }
 
   if (checkGameStatus == true) {
@@ -118,9 +126,11 @@ void initializeTimer(void)  {
 
 
 ISR(TIMER1_COMPA_vect)  {
+  //  Communicate to loop() that it's time to make new random number. Increase timer interrupt rate after 10 interrupts.
 
+  //set newTimerInterrupt to true to generate a new number in loop()
   newTimerInterrupt = true;
-  
+  //Serial.println("running TIMER1");
 }
 
 
@@ -139,6 +149,7 @@ ISR(TIMER1_COMPA_vect)  {
           userNumbers[currentButtonIndex]=whatButton(buttonState);
           Serial.print("Pressed:");
           Serial.println(userNumbers[currentButtonIndex]);
+          delay(1000);
           currentButtonIndex++;
           checkGameStatus=true;
           }
@@ -154,9 +165,22 @@ ISR(TIMER1_COMPA_vect)  {
 //**********************************
 
 void checkGame() {
+	/*
+  checkGame() subroutine is used to check the status
+  of the Game after each player button press.
+  
+  If the latest player button press is wrong, the game stops
+  and if the latest press was right, game display is incremented
+  by 1.
+  
+  Parameters
+  byte lastButtonPress of the player 0 or 1 or 2 or 3
+*/
+//  Serial.println("running checkGame");
+//compare arrays to currentButtonIndex (i), if userNumbers dont't match randomNumbers then end the game (maybe belongs in PCINT2_vect?)
 
 
-       if (userNumbers[testedButtonIndex] != randomNumbers[testedButtonIndex] ) {    
+       if (userNumbers[testedButtonIndex] != randomNumbers[testedButtonIndex] ) {    //userNumbers = button press history --- randomNumbers = led history
         endGame();
       }
 
@@ -169,6 +193,7 @@ void checkGame() {
         if (testedButtonIndex == currentButtonIndex ) checkGameStatus = false;
         Serial.print("Correct Presses:");
         Serial.println(correctPresses);
+        delay(1000);
         //Serial.println(testedButtonIndex);
     }
 
@@ -205,11 +230,13 @@ void initializeGame() {
 //          Start the game
 //**********************************
 void startGame() {
+   // see requirements for the function from SpedenSpelit.h
   if (gameActive == true) {
-    cycleRandomLeds(); 
+    cycleRandomLeds(); //Needs delay?
     currentLedIndex = 0;                  //  For saving to array
     testedButtonIndex = 0;
     currentButtonIndex = 0;  
+    //interrupts(); //Activate interrupts
   }
 }
 
@@ -217,17 +244,23 @@ void startGame() {
 //           End the game
 //**********************************
 void endGame() {
+  //Serial.println("running endGame");
   gameActive = false;
   showResult(score);
   cli();
+  //cycleRandomLeds(); //Needs delay?
   currentLedIndex = 0;                  //  For saving to array
   testedButtonIndex = 0;
   currentButtonIndex = 0;
   buttonState=0;
-  OCR1A = 250000;
   correctPresses = 0;
+  OCR1A = 250000;
+  delay(1000);
   sei();
   Serial.println("Game Ended");
+   
+   
+
 }
 
 //**********************************
