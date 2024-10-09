@@ -122,7 +122,7 @@ void initializeTimer(void)  {
 
   cli(); //stop interrupts "clear interrupts"
   TCCR1A = 0;         //WGM11 ja WGM10 = 0
-  TCCR1B = 12;      //WGM12 => CTC mode ja CS11 ja CS10 => prescaler. this is now 256  -> 16/256 = (not calculated) kHz which means Y microseconds until increment happens
+  TCCR1B = 13;      //WGM12 => CTC mode ja CS11 ja CS10 => prescaler. this is now 256  -> 16/256 = (not calculated) kHz which means Y microseconds until increment happens
   //^ B:n prescaleriksi arvo 256. Kello pyörii 16MHz taajuudella, montako pulssia (prescaler) mennään, että tulee yhden timer counter arvo isommaksi. 
   OCR1A = 250000;      // OCIE1A = Output Compare Interrupt Enable 1A 
   //^ When the counter reaches 250,000, it triggers an interrupt on TCCR1A, then resets to 0 and starts counting again. 250000 / X = Y so interrupt happens every F seconds
