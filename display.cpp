@@ -49,8 +49,8 @@ void writeByte(uint8_t bits,bool last)
 
 void writeHighAndLowNumber(uint8_t tens,uint8_t ones)
 {
-  writeByte(tens, false); //vasen display
-  writeByte(ones, true);  //oikea display
+  writeByte(tens, true); //vasen display
+  writeByte(ones, false);  //oikea display
 // See requirements for this function from display.h
 }
 
