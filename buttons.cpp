@@ -1,14 +1,15 @@
 #include "buttons.h"
-const int PIN[] = {4,5,6,7};
+const int PIN[] = {4,5,6,7}; //Digital outs 4-7 for buttons.
 
 
  
 
 void initButtonsAndButtonInterrupts(void)
 {
-  // See requirements for this function from buttons.h
+  // Sources:
   // https://www.electrosoftcloud.com/en/pcint-interrupts-on-arduino/#:~:text=PCINT%20interrupts%20are%20interrupts%20that%20can%20be%20triggered%20from%20any
   // https://www.arduino.cc/reference/en/language/structure/compound-operators/compoundbitwiseor/
+  // Setting interrupts for ports and setting them HIGH
 PCICR |= B00000100;
 PCMSK2 |= B11110000;
  for (int i = 0; i < 4 ; i++)
@@ -18,25 +19,23 @@ PCMSK2 |= B11110000;
       } 
 }
 
-int readButton()
+int readButton() 
 {
-  int button=0;  
-  for(int i = 0; i < 4; i++)
+ 
+ int button=0;   
+ //checking for ports that are LOW and marking corresponding bit as 1 
+ for(int i = 0; i < 4; i++)  
       {
         if(digitalRead(PIN[i]) == LOW)
               button |= 1<<i;
       }
-            
-            //chosenNumbers[numberCounter]=buttonState;
-            //numberCounter++;
-            //buttonRead=true;
+    //returns the info to caller
     return(button);          
   }
 
 int whatButton( int w)
 {
-  //int buttonstate= w/2;
-  //return buttonstate;
+//Converting buttonvalue to led value.
    int convertedLedValue= 5;
    switch (w) {
   case 1:
