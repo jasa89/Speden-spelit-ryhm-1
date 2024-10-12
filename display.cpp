@@ -58,7 +58,7 @@ void showResult(byte number)
 {
   uint8_t tens = number / 10;
   uint8_t ones = number % 10;
-  writeHighAndLowNumber(tens, ones);
+  writeHighAndLowNumber(ones, tens);
 // See requirements for this function from display.h
 }
 
