@@ -48,7 +48,6 @@ void setup()
   initButtonsAndButtonInterrupts();
   initializeDisplay();
   initializeLeds();
-  pinMode(13,INPUT); //for reset
   initializeGame();
   initializeTimer(); //Activate timer
   
