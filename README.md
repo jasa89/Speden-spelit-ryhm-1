@@ -4,7 +4,7 @@ Speden Sepelit is an Arduino-based game project that starts when player pushes a
 
 ## Table of contents
 
-* [Project Description]()
+* [Project Description](#project-description)
 * [Features]()
 * [Hardware Requirements]()
 * [Software Requirements]()
@@ -15,7 +15,7 @@ Speden Sepelit is an Arduino-based game project that starts when player pushes a
 
 
 
-## Project Description
+## Project Description 
 
 The Speden Sepelit projectis a game made using an Arduino. It has several parts as follows:
 
