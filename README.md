@@ -75,7 +75,7 @@ Click Upload to compile and upload the code to your Arduino.
 
 ## Usage
 
-Player starts tehe game by pressing any of the four pushbuttons and this will start the count on one sevensegment display and the leds will go off when the game starts. Ledst start to blink randomly and the palyer has to push the correct button connected to specific led while game is active the sevensegment displays will display the current score. Game stops when palyer makes wrong choise and presses incorrect button and the game will go back to starting position where all led are lit on.  
+Player starts the game by pressing any of the four pushbuttons and this will start the count on one sevensegment display and the leds will go off when the game starts. Ledst start to blink randomly and the palyer has to push the correct button connected to specific led while game is active the sevensegment displays will display the current score. Game stops when palyer makes wrong choise and presses incorrect button and the game will go back to starting position where all leds are lit on.  
 
 
 
