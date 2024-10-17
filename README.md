@@ -40,10 +40,11 @@ To recreate this project, you'll need the following hardware components:
 * 4 LEDs (any color)
 * 4 push buttons
 * 5 Resistors ( 470Ω recommended)
+* 2 sevensegment displays
 * 2 Breadboards 
 * Jumper wires
 * USB Cable to connect the Arduino to your computer
-* 2 sevensegment displays
+
 
 ## Software Requirements
 
