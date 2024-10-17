@@ -54,7 +54,7 @@ Speden Sepelit Code: Clone or download the project from this repository.
 ## Circuit Diagram
 
 Here’s how to wire your components:
-see fthis from [Circuit Diagram](https://github.com/jasa89/Speden-spelit-ryhm-1/blob/main/Project%20Documents/Circuit%20Diagram/CircuitDiagram.png): 
+see this from [Circuit Diagram](https://github.com/jasa89/Speden-spelit-ryhm-1/blob/main/Project%20Documents/Circuit%20Diagram/CircuitDiagram.png): 
 
 
 ### Example Diagram
