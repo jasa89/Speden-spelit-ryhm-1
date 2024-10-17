@@ -1,6 +1,6 @@
 # Speden Sepelit
 
-Speden Sepelit is an Arduino-based LED project that simulates various lighting patterns. The project controls a set of 4 LEDs using digital pins 2 to 5 and demonstrates sequential, random, and binary LED lighting effects. This project serves as a fun way to learn how to control LEDs via microcontrollers like Arduino.
+Speden Sepelit is an Arduino-based game project that starts when player pushes a button. The project controls a set of 4 LEDs using analog pins 0 to 3  and player must press correct button when led is turned on and it is possible to palyer to follow behind if the order is the same as lighted leds. There is also two sevensegment displays to show countdownt to start the game and to display current score. 
 
 ## Table of contents
 
