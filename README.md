@@ -57,7 +57,27 @@ Here’s how to wire your components:
 see this from [Circuit Diagram](https://github.com/jasa89/Speden-spelit-ryhm-1/blob/main/Project%20Documents/Circuit%20Diagram/CircuitDiagram.png): 
 
 
-### Example Diagram
+## Installation
+
+1. Clone the Repository
+Copy code
+git clone https://github.com/your-repository/speden-sepelit.git
+cd speden-sepelit
+
+2. Open in Arduino IDE
+Open the Arduino IDE.
+Load the project .ino file or the project folder in the IDE.
+
+3. Upload the Code
+Select your Arduino board from Tools > Board.
+Select the appropriate port from Tools > Port.
+Click Upload to compile and upload the code to your Arduino.
+
+## Usage
+
+
+
+
 
 
 
