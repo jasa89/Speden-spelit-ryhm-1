@@ -5,11 +5,11 @@ Speden Sepelit is an Arduino-based game project that starts when player pushes a
 ## Table of contents
 
 * [Project Description](#project-description)
-* [Features]()
-* [Hardware Requirements]()
-* [Software Requirements]()
+* [Features](features)
+* [Hardware Requirements](#hardware-reguirements)
+* [Software Requirements](#softtware-reguirements)
 * [Circuit Diagram](https://github.com/jasa89/Speden-spelit-ryhm-1/blob/main/Project%20Documents/Circuit%20Diagram/CircuitDiagram.png)
-* [Installation]()
+* [Installation](#installation)
 * [Usage]()
 
 
