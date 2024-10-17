@@ -39,7 +39,7 @@ To recreate this project, you'll need the following hardware components:
 * Arduino (Uno, Nano, or any compatible board)
 * 4 LEDs (any color)
 * 4 push buttons
-* 4 Resistors ( 470Ω recommended)
+* 5 Resistors ( 470Ω recommended)
 * 2 Breadboards 
 * Jumper wires
 * USB Cable to connect the Arduino to your computer
