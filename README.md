@@ -19,18 +19,18 @@ Speden Sepelit is an Arduino-based game project that starts when player pushes a
 
 The Speden Sepelit projectis a game made using an Arduino. It has several parts as follows:
 
-* Sequential LED blinking
-* Random LED selection
-* Binary counting representation with LEDs
-* Adjustable lighting speed with decreasing delays
-* The code is written in C++ for the Arduino platform and uses 4 digital pins (2 to 5) to control LEDs.
+* Speden spelit.ino to control the game
+* buttons files  where buttons are handled
+* leds files where leds are handled 
+* display files where dispays are handled 
+* The code is written in C++ for the Arduino platform.
 
 ## Features
 
-* Sequential LED Blinking: LEDs light up in a predefined sequence.
-* Random LED Lighting: LEDs are chosen randomly to light up, adding unpredictability to the pattern.
-* Binary Number Display: The LEDs represent numbers from 0 to 15 in binary.
-* Adjustable Delay: Lighting speed can decrease over time for dynamic visual effects.
+* Sequential LED Blinking: LEDs light up in a predefined sequence and the game will speed up after 10 rounds.
+* Count down feature on sevensegment displays to show the palyer when the game starts
+* 
+* 
 
 ## Hardware Requirements
 
@@ -38,10 +38,12 @@ To recreate this project, you'll need the following hardware components:
 
 * Arduino (Uno, Nano, or any compatible board)
 * 4 LEDs (any color)
-* 4 Resistors (220Ω or 330Ω recommended)
-* Breadboard
+* 4 push buttons
+* 4 Resistors ( 470Ω recommended)
+* 2 Breadboards 
 * Jumper wires
 * USB Cable to connect the Arduino to your computer
+* 2 sevensegment displays
 
 ## Software Requirements
 
