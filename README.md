@@ -17,7 +17,7 @@ Speden Sepelit is an Arduino-based game project that starts when player pushes a
 
 ## Project Description
 
-The Speden Sepelit project simulates multiple LED lighting effects using an Arduino. It demonstrates various lighting patterns such as:
+The Speden Sepelit projectis a game made using an Arduino. It has several parts as follows:
 
 * Sequential LED blinking
 * Random LED selection
