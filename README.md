@@ -36,7 +36,7 @@ The Speden Spelit project is a game made using an Arduino. It has several parts 
 
 To recreate this project, you'll need the following hardware components:
 
-* Arduino (Uno, Nano, or any compatible board)
+* Arduino Uno
 * 4 LEDs (any color)
 * 4 push buttons
 * 5 Resistors ( 470Ω recommended)
